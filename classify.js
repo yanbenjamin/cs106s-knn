@@ -41,9 +41,12 @@ const K = 3; // number of nearest neighbors to check for each sample
  * 				excluding index 0 and the last index
 */
 function calculateDistance(sample1, sample2){
-	/* TODO: delete the line below and write your own code here! */
-	return -1;
-
+	/* TODO: write your own code here! */
+	let distance = 0;
+	for (let i = 1; i < sample1.length - 1; i++){ //ignores first and last index
+		distance += Math.pow(sample1[i] - sample2[i], 2);
+	}
+	return Math.sqrt(distance);
 }
 
 
@@ -84,11 +87,19 @@ function getClosestKPoints(testSample, trainData, K){
 	
 	for (let trainSample of trainData){
 		// TODO: populate pointDistances here as described in part (1) of the strategy
+		let distance = calculateDistance(testSample, trainSample);
+		let label = trainSample[trainSample.length - 1]; //last element of array
+		let id = trainSample[0]; //0th element of array
 
+		pointDistances.push({"id": id, "distance": distance, "label": label});
 	}
+	// TODO: write your code for part (2) of the strategy!
+	
+	//sort points from lowest to highest distance (inside is a compact function in JS)
+	pointDistances.sort((pointA, pointB) => pointA.distance - pointB.distance);
 
-	// TODO: delete the line below and write your code for part (2) of the strategy!
-	return pointDistances;
+	// subarray of first K points (due to sorting, this is the closest K points / neighbors)
+	return pointDistances.slice(0, K); 
 }
 
 
@@ -114,8 +125,16 @@ function predictSample(testSample, trainData, K){
 
 	let closestKPoints = getClosestKPoints(testSample, trainData, K);
 	
-	// TODO: delete the line below and write your own code here!
-	return -1;
+	// TODO: write your own code here!
+	let benign = 0; // counter of label 0
+	let malignant = 0; // counter of label 1
+	for (let point of closestKPoints){
+		if (point.label === 1) malignant++;
+		else benign++;
+	}
+	// voting occurs (picks majority label)
+	if (benign > malignant) return 0; // predict benign 
+	return 1; // predict malignant label
 }
 
 
