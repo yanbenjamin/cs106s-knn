@@ -64,7 +64,7 @@ function calculateDistance(testSample, trainSample){
  *   > K: An Integer, for number of closest points to obtain
  *		
  * Returns: 
- * 	 > pointDistances: An array representing the K closest points, of the form above
+ * 	 > (Array[Object]): An array representing the K closest points, of the form above
 */
 function getNearestNeighbors(testSample, trainSamples, K){
 	let pointDistances = [];
