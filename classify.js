@@ -61,7 +61,7 @@ function calculateDistance(sample1, sample2){
  * Params: 
  *   > testSample: A number array, e.g., [1001, 2.0,..., 5.0, 1], from testData.
  *   > trainSamples: An array of training points, each formatted identically to testSample
- *   > K: An Integer, for number of closest points to look at
+ *   > K: An Integer, for number of closest points to obtain
  *		
  * Returns: 
  * 	 > pointDistances: An array representing the K closest points, of the form above
@@ -92,7 +92,7 @@ function getNearestNeighbors(testSample, trainSamples, K){
  * Params: 
  *   > testSample: A Number array, e.g., [1001, 2.0,...,5.0, 1], from testData.
  *   > trainSamples: An array of training points, each formatted identically to testSample
- *   > K: An Integer, for number of closest points to obtain 
+ *   > K: An Integer, for number of closest points to look at 
  * 
  * Returns: 
  * 	 > (Number): predicted label, either 0 (BENIGN_LABEL) or 1 (MALIGNANT_LABEL)
