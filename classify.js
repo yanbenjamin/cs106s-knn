@@ -1,20 +1,15 @@
-/** 
- * File: cancer-classify.js
+/** File: cancer-classify.js
  * ---------------------------
- * Objective is classifying tumor samples as either benign 
- * or malignant, corresponding to labels of 0 and 1, respectively. 
- * 
- * The method we use for classification is the K-Nearest Neighbors 
- * (KNN) algorithm. The idea is that, for each new point we're
- * trying to classify, we look at the K 'most similar' or closest points 
- * in the training dataset. Then, we examine the labels of those K most
- * similar points--if a majority are benign, then we classify the new
- * point are benign. If a majority as malignant, then we classify as malignant.
- * 
- * Refresh Chrome tab on index.html & check console to see whether
- * the preliminary tests pass or not, as well as the model classification 
- * performance once you complete all TODOs! Also, experiment with
- * different odd values of K and how it impacts performance. */
+ * Objective is classifying tumor samples as either benign (0) or malignant (1).
+ *
+ * We use the K-Nearest Neighbors (KNN) algorithm. The core idea is that, for each new point,
+ *   (1) We look at the K "most similar" or closest points in the training dataset.
+ *   (2) We examine the labels of those K closest points, and do a vote--if a majority are benign, 
+ *   the new point is classified as benign; otherwise, the point is classified as malignant.
+ *
+ * As you code, refresh the Chrome tab on index.html, checking the console to see whether the 
+ * tests pass or not, along with model performnce once you complete all TODOs! 
+ * Also - see how performance changes with different odd values of K (odd to prevent ties!) */
 
 const K = 3; // number of nearest neighbors to check for each sample 
 const BENIGN_LABEL = 0;
@@ -30,7 +25,7 @@ const MALIGNANT_LABEL = 1;
  * ----------------------------
  * Params: 
  * 	> testSample: A Number array, e.g., [1001, 2.0, 3.0, ..., 2.0, 5.0, 1]
- *      > trainSample: A Number array, e.g., [2003, 3.0, 2.0, ..., 1.0, 2.0, 0], same length! 
+ *      > trainSample: A Number array, e.g., [2003, 3.0, 2.0, ..., 1.0, 2.0, 0], note same length!
  * 
  * Returns: 
  * 	> (Number): The Euclidean distance, excluding index 0 and the last index,
@@ -42,7 +37,7 @@ function calculateDistance(sample1, sample2){
 }
 
 /** Function: getNearestNeighbors 
- * This function returns the K closest points in trainSamples to an input testSample. 
+ * This function returns the K closest points (and their labels) in trainSamples to input testSample.
  * An example return array may look like, for K = 3:
  * 
  * 	[{"id": 1001, "distance": 2.5, "label": 1}, {"id": 1007, "distance": 2.8, "label": 0},
@@ -83,11 +78,12 @@ function getNearestNeighbors(testSample, trainSamples, K){
 }
 
 /** Function: predictSample 
- * This functions brings everything together to classify any given tumor sample. 
- * 
- * First, it makes a call to getNearestNeighbors() above. Next, among the returned K nearest 
- * points, it should keep track of / count how many are labeled benign (0) and how many are 
- * labeled malignant (1). Then, it returns the label with the majority. 
+ * This functions brings everything together to classify any given tumor sample. As steps,
+ *
+ *   (1) Makes a call to getNearestNeighbors() above - starter code does this already!
+ *   (2) TODO: Iterate over the returned K nearest neighbors, and keep track of / count how many
+ *       are labeled benign (0) and how many labeled malignant (1). 
+ *   (3) TODO: Return the label with the majority.
  * 
  * Tips - We can use .label to obtain the label attribute of each point, e.g., point.label 
  *        To loop over an array, we can write, e.g., for (let point of nearestNeighbors){...}
@@ -104,14 +100,14 @@ function predictSample(testSample, trainSamples, K){
 	// an array of the K nearest neighbors, that we should loop over
 	let nearestNeighbors = getNearestNeighbors(testSample, trainSamples, K);
 	
-	// TODO: delete the line below and write your own code here!
+	// TODO: delete the line below & write your own code here for Steps (2) and (3)!
 	return -1;
 }
 
 
 /* no need to modify anything beyond this point! */
 
-function KNN(){
+function KNN(){ // runs the classifier over all test points, outputs the performance
 	let numCorrect = 0, numTotal = 0;
 	for (let testSample of testData){
 		let predLabel = predictSample(testSample, trainData, K);
