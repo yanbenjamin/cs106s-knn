@@ -61,7 +61,7 @@ function calculateDistance(sample1, sample2){
  * Params: 
  *   > testSample: A number array, e.g., [1001, 2.0,..., 5.0, 1], from testData.
  *   > trainSamples: An array of training points, each formatted identically to testSample
- *   > K: An Integer, for number of closest points to obtain
+ *   > K: An Integer, for number of closest points to look at
  *		
  * Returns: 
  * 	 > pointDistances: An array representing the K closest points, of the form above
