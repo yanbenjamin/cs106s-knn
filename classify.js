@@ -37,7 +37,7 @@ function calculateDistance(testSample, trainSample){
 	return -1;
 }
 
-/** Function: getNearestNeighbors 
+/** Function: findNearestPoints 
  * This function returns the K closest points (and their labels) in trainSamples to input testSample.
  * An example return array may look like, for K = 3:
  * 
@@ -52,8 +52,8 @@ function calculateDistance(testSample, trainSample){
  * 		       {"id": <sample id #>, "distance": <distance>, "label": <label>}
  *	 Note - The ID # and label can be extracted via the 0th and last index of trainSample, respectively. 
  * 
- *   (2) Then, sort the points in pointDistances from smallest to largest distances, and return a
- * 	 subarray of the first K elements (i.e. the K points with smallest / closest distance).
+ *   (2) Then, sort the points in pointDistances from smallest to largest distances, and return a subarray
+ *       of the first K elements (i.e. the K points with smallest / closest distance).
  *
  * - Tips: For sorting, look at the lecture slides! To add an element to an array, use .push().
  	   To take a subarray from index start (inclusive) to end (exclusive), use .slice(start,end)
@@ -66,28 +66,28 @@ function calculateDistance(testSample, trainSample){
  * Returns: 
  * 	 > (Array[Object]): An array representing the K closest points, of the form above
 */
-function getNearestNeighbors(testSample, trainSamples, K){
+function findNearestPoints(testSample, trainSamples, K){
 	let pointDistances = [];
 	
 	for (let trainSample of trainSamples){
-		// TODO: populate pointDistances here as described in part (1) of the strategy
+		// TODO: add an object to pointDistances here, as described in part (1) of the strategy
 
 	}
 
 	// TODO: delete the line below and write your code for part (2) of the strategy!
-	return pointDistances;
+	return [];
 }
 
 /** Function: predictSample 
  * This functions brings everything together to classify any given tumor sample. As steps,
  *
- *   (1) Makes a call to getNearestNeighbors() above - starter code does this already!
- *   (2) TODO: Iterate over the returned K nearest neighbors, and keep track of / count how many
+ *   (1) Makes a call to findNearestPoints() above - starter code does this already!
+ *   (2) TODO: Iterate over the returned K nearest points, and keep track of / count how many
  *       are labeled benign (0) and how many labeled malignant (1). 
  *   (3) TODO: Return the label with the majority.
  * 
  * Tips - We can use .label to obtain the label attribute of each point, e.g., point.label 
- *        To loop over an array, we can write, e.g., for (let point of nearestNeighbors){...}
+ *        To loop over an array, we can write, e.g., for (let point of nearestPoints){...}
  ----------------------------
  * Params: 
  *   > testSample: A Number array, e.g., [1001, 2.0,...,5.0, 1], from testData.
@@ -98,8 +98,8 @@ function getNearestNeighbors(testSample, trainSamples, K){
  * 	 > (Number): predicted label, either 0 (BENIGN_LABEL) or 1 (MALIGNANT_LABEL)
 */
 function predictSample(testSample, trainSamples, K){
-	// an array of the K nearest neighbors, that we should loop over
-	let nearestNeighbors = getNearestNeighbors(testSample, trainSamples, K);
+	// an array of the K nearest points, that we should loop over
+	let nearestPoints = findNearestPoints(testSample, trainSamples, K);
 	
 	// TODO: delete the line below & write your own code here for Steps (2) and (3)!
 	return -1;
