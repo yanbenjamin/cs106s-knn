@@ -11,6 +11,7 @@
  * tests pass or not, along with model performnce once you complete all TODOs! 
  * Also - see how performance changes with different odd values of K (odd to prevent ties!) */
 
+
 const K = 3; // number of nearest neighbors to check for each sample 
 const BENIGN_LABEL = 0;
 const MALIGNANT_LABEL = 1;
