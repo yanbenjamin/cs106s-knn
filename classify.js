@@ -24,8 +24,8 @@ const MALIGNANT_LABEL = 1;
  * - Tips: Math.sqrt() calculates square root, Math.pow(x,y) does exponent x^y.
  * ----------------------------
  * Params: 
- * 	> testSample: A Number array, e.g., [1001, 2.0, 3.0, ..., 2.0, 5.0, 1]
- *      > trainSample: A Number array, e.g., [2003, 3.0, 2.0, ..., 1.0, 2.0, 0], note same length!
+ * 	> testSample: A Number array, e.g., [1001, 2.0, ..., 5.0, 1]
+ *      > trainSample: A Number array, e.g., [2003, 3.0, ..., 2.0, 0], note same length!
  * 
  * Returns: 
  * 	> (Number): The Euclidean distance, excluding index 0 and the last index,
