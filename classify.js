@@ -32,7 +32,7 @@ const MALIGNANT_LABEL = 1;
  * 	> (Number): The Euclidean distance, excluding index 0 and the last index,
  	    e.g., for the Params examples above, sqrt((2.0 - 3.0)^2 + ... + (5.0 - 2.0)^2)
  */
-function calculateDistance(sample1, sample2){
+function calculateDistance(testSample, trainSample){
 	/* TODO: delete the line below and write your own code here! */
 	return -1;
 }
