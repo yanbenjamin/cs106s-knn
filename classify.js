@@ -35,10 +35,10 @@ const MALIGNANT_LABEL = 1;
 function calculateDistance(testSample, trainSample){
 	/* TODO: delete the line below and write your own code here! */
 	let distance = 0;
-    for (let i = 1; i < testSample.length - 1; i++){ // ignores first and last index
-        distance += Math.pow(testSample[i] - trainSample[i], 2);
-    }
-    return Math.sqrt(distance);
+	for (let i = 1; i < testSample.length - 1; i++){ // ignores first and last index
+		distance += Math.pow(testSample[i] - trainSample[i], 2);
+	}
+	return Math.sqrt(distance);
 }
 
 

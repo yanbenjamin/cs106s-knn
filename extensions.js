@@ -28,7 +28,7 @@ const MALIGNANT_LABEL = 1;
  * Identical to the version in classify.js
  */
 function calculateDistance(testSample, trainSample){
-	/* TODO: delete the line below and copy & paste your earlier implementation here! */
+    /* TODO: delete the line below and copy & paste your earlier implementation here! */
     let distance = 0;
     for (let i = 1; i < testSample.length - 1; i++){ // ignores first and last index
         distance += Math.pow(testSample[i] - trainSample[i], 2);
