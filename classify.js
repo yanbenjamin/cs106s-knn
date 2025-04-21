@@ -26,7 +26,7 @@ const MALIGNANT_LABEL = 1;
  * ----------------------------
  * Params: 
  * 	> testSample: A Number array, e.g., [1001, 2.0, ..., 5.0, 1]
- *      > trainSample: A Number array, e.g., [2003, 3.0, ..., 2.0, 0], note same length!
+ *  > trainSample: A Number array, e.g., [2003, 3.0, ..., 2.0, 0], note same length!
  * 
  * Returns: 
  * 	> (Number): The Euclidean distance, excluding index 0 and the last index,
@@ -37,6 +37,7 @@ function calculateDistance(testSample, trainSample){
 	return -1;
 }
 
+
 /** Function: findNearestPoints 
  * This function returns the K closest points (and their labels) in trainSamples to input testSample.
  * An example return array may look like, for K = 3:
@@ -45,19 +46,18 @@ function calculateDistance(testSample, trainSample){
  *       {"id": 1005, "distance": 3.1, "label": 0}]  
  * 
  * A recommended strategy is as follows:
- *   (1) First, iterate through all points in trainSamples, and compute the distance between each point 
- *       (i.e. trainSample) with the testSample point. Hint: Use calculateDistance() from above!
- *
+ *   (1) For each trainSample point, compute its distance with testSample. For this, use calculateDistance()!
  *       To keep track of each point's distance, add an object of the form below to array pointDistances,
- * 		       {"id": <sample id #>, "distance": <distance>, "label": <label>}
- *	 Note - The ID # and label can be extracted via the 0th and last index of trainSample, respectively. 
+ * 		 		{"id": <sample id #>, "distance": <distance>, "label": <label>} 
+ * 		 
+ * 		 Note - The ID # and label can be extracted via the 0th and last index of trainSample, respectively. 
  * 
  *   (2) Then, sort the points in pointDistances from smallest to largest distances, and return a subarray
  *       of the first K elements (i.e. the K points with smallest / closest distance).
  *
  * - Tips: For sorting, look at the lecture slides! To add an element to an array, use .push().
- 	   To take a subarray from index start (inclusive) to end (exclusive), use .slice(start,end)
- ----------------------------
+ *	   To take a subarray from index start (inclusive) to end (exclusive), use .slice(start,end)
+ * ----------------------------
  * Params: 
  *   > testSample: A number array, e.g., [1001, 2.0,..., 5.0, 1], from testData.
  *   > trainSamples: An array of training points, each formatted identically to testSample
@@ -78,6 +78,7 @@ function findNearestPoints(testSample, trainSamples, K){
 	return [];
 }
 
+
 /** Function: predictSample 
  * This functions brings everything together to classify any given tumor sample. As steps,
  *
@@ -88,12 +89,11 @@ function findNearestPoints(testSample, trainSamples, K){
  * 
  * Tips - We can use .label to obtain the label attribute of each point, e.g., point.label 
  *        To loop over an array, we can write, e.g., for (let point of nearestPoints){...}
- ----------------------------
+ * ----------------------------
  * Params: 
  *   > testSample: A Number array, e.g., [1001, 2.0,...,5.0, 1], from testData.
  *   > trainSamples: An array of training points, each formatted identically to testSample
  *   > K: An Integer, for number of closest points to look at 
- * 
  * Returns: 
  * 	 > (Number): predicted label, either 0 (BENIGN_LABEL) or 1 (MALIGNANT_LABEL)
 */
@@ -108,7 +108,12 @@ function predictSample(testSample, trainSamples, K){
 
 /* no need to modify anything beyond this point! */
 
+KNN();
+
 function KNN(){ // runs the classifier over all test points, outputs the performance
+	console.log("Run runTests() in the console to perform automated tests",
+		" (please note that they're not comprehensive!)");
+		
 	let numCorrect = 0, numTotal = 0;
 	for (let testSample of testData){
 		let predLabel = predictSample(testSample, trainData, K);
@@ -123,5 +128,3 @@ function KNN(){ // runs the classifier over all test points, outputs the perform
 	// display results as a table on the HTML page
 	plotResults(trainData, testData, K);
 }
-
-KNN();

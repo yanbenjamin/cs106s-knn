@@ -1,7 +1,4 @@
 
-console.log("Run sanityCheck() in the console to perform automated tests",
-            " (please note that they're not comprehensive!)");
-
 function testDistance(){
 	const eps = 1e-3; // epsilon to accommodate possible floating-point errors
 	let numFailedTests = 0;
@@ -11,8 +8,8 @@ function testDistance(){
 
 	function logSuccess(sample1, sample2, distance, expectedDistance, stepByStep){
 	        console.log("✅ calculateDistance matches reference solution for inputs: ",
-	                        "\nsample1 = " + JSON.stringify(sample1),
-	                        "\nsample2 = " + JSON.stringify(sample2),
+	                        "\ntestSample = " + JSON.stringify(sample1),
+	                        "\ntrainSample = " + JSON.stringify(sample2),
 	                        "\n\nOutput Distance = " + JSON.stringify(distance),
 	                        "\nExpected Distance = " + JSON.stringify(expectedDistance) + " ← " + stepByStep
                 );
@@ -20,8 +17,8 @@ function testDistance(){
 
 	function logError(sample1, sample2, distance, expectedDistance, stepByStep){
 		console.log("❌ calculateDistance does not match reference solution for inputs: ",
-	                        "\nsample1 = " + JSON.stringify(sample1),
-	                        "\nsample2 = " + JSON.stringify(sample2),
+	                        "\ntestSample = " + JSON.stringify(sample1),
+	                        "\ntrainSample = " + JSON.stringify(sample2),
 	                        "\n\nOutput Distance = " + JSON.stringify(distance),
 	                        "\nExpected Distance = " + JSON.stringify(expectedDistance) + " ← " + stepByStep
 	     	); 
@@ -31,13 +28,11 @@ function testDistance(){
 	    let output = calculateDistance(sample1, sample2);
 	    if (Math.abs(expectedOutput - output) < eps){
 	    	logSuccess(sample1, sample2, output, expectedOutput, stepByStep);
-	    	//console.log("✅ calculateDistance([" + sample1 + "],[" + sample2 + "]) => " + output + ". Matches reference solution!"); 
 	    	return 0; // all good!
 	    }
 	  	
 	  	//flags specific possible errors by analyzing the output
 	  	logError(sample1, sample2, output, expectedOutput, stepByStep);
-	    //console.log("❌ calculateDistance([" + sample1 + "],[" + sample2 + "]) => " + output + ". Expected: " + expectedOutput); 
 	    if (Math.abs(expectedOutput**2 - output) < Math.sqrt(eps)) checkSquareRoot = true;
 	    if (Math.abs(expectedOutput - output) < 1) checkLastIndex = true;
 	    if (Math.abs(expectedOutput - output)**2 > 9**2 * (sample1.length - 2)) checkIndex0 = true;
@@ -72,14 +67,14 @@ function testDistance(){
 
 
 
-function testKClosestNeighbors(){
+function testFindNearestPoints(){
 	// shouldn't run tests for this function until all tests above pass
 	let numFailedTests = 0;
 
 	function logSuccess(testSample, trainData, K, neighbors, correctNeighbors){
-	        console.log("✅ getClosestKPoints matches point IDs of reference solution, for inputs: ",
+	        console.log("✅ findNearestPoints matches point IDs of reference solution, for inputs: ",
 	                        "\ntestSample = " + JSON.stringify(testSample),
-	                        "\ntrainData = " + JSON.stringify(trainData),
+	                        "\ntrainSamples = " + JSON.stringify(trainData),
 	                        "\nK = " + K,
 	                        "\n\nOutput Neighbors = " + JSON.stringify(neighbors),
 	                        "\nExpected Neighbors = " + JSON.stringify(correctNeighbors)
@@ -87,9 +82,9 @@ function testKClosestNeighbors(){
     	}
 
     function logSizeError(testSample, trainData, K, neighbors){
-        console.log("❌ getClosestKPoints output does not contain K points, for inputs: ",
+        console.log("❌ findNearestPoints output does not contain K points, for inputs: ",
                         "\ntestSample = " + JSON.stringify(testSample),
-                        "\ntrainData = " + JSON.stringify(trainData),
+                        "\ntrainSamples = " + JSON.stringify(trainData),
                         "\nK = " + K,
                         "\n\nOutput Neighbors = " + JSON.stringify(neighbors), 
                         "\n# of Neighbors = " + neighbors.length + " ‼️"
@@ -97,9 +92,9 @@ function testKClosestNeighbors(){
 	}
 
 	function logError(testSample, trainData, K, neighbors, correctNeighbors){
-        console.log("❌ getClosestKPoints does not match point IDs of reference solution, for inputs: ",
+        console.log("❌ findNearestPoints does not match point IDs of reference solution, for inputs: ",
                         "\ntestSample = " + JSON.stringify(testSample),
-                        "\ntrainData = " + JSON.stringify(trainData),
+                        "\ntrainSamples = " + JSON.stringify(trainData),
                         "\nK = " + K,
                         "\n\nOutput Neighbors = " + JSON.stringify(neighbors),
                         "\nExpected Neighbors = " + JSON.stringify(correctNeighbors)
@@ -108,7 +103,7 @@ function testKClosestNeighbors(){
 
 	function runUnitTest(testSample, trainData, K, correctNeighbors){
 
-		let neighbors = getClosestKPoints(testSample, trainData, K);
+		let neighbors = findNearestPoints(testSample, trainData, K);
 		if (neighbors.length != correctNeighbors.length){
 			logSizeError(testSample, trainData, K, neighbors);
 			return 1;
@@ -141,11 +136,11 @@ function testKClosestNeighbors(){
     					[{"id": 103, "distance": 1, "label": 0}, {"id": 101, "distance": 3, "label": 0}]);
 
 	if (numFailedTests === 0){
-		console.log("✅ All 3 tests for getClosestKPoints passed!",
+		console.log("✅ All 3 tests for findNearestPoints passed!",
 						"\n----------------------------------");
 		return 0;
 	}
-	console.log("🫠 " + (3 - numFailedTests) + " out of 3 tests for getClosestKPoints passed, you got this!",
+	console.log("🫠 " + (3 - numFailedTests) + " out of 3 tests for findNearestPoints passed, you got this!",
 						"\n---------------------------");
 	return 1;
 }
@@ -159,7 +154,7 @@ function testKNNPredictor(){
 	function logSuccess(testSample, trainData, K, predLabel, correctLabel, neighborLabels, correctNeighborLabels){
         console.log("✅ predictSample matches reference solution for inputs: ",
                         "\ntestSample = " + JSON.stringify(testSample),
-                        "\ntrainData = " + JSON.stringify(trainData),
+                        "\ntrainSamples = " + JSON.stringify(trainData),
                         "\nK = " + K,
                         "\n\nOutput Label = " + predLabel + " (Neighbor Labels = " + JSON.stringify(neighborLabels) + ")",
                         "\nExpected Label = " + correctLabel + " (Neighbor Labels = " + JSON.stringify(correctNeighborLabels) + ")"
@@ -169,7 +164,7 @@ function testKNNPredictor(){
 	function logError(testSample, trainData, K, predLabel, correctLabel, neighborLabels, correctNeighborLabels){
         console.log("❌ predictSample does not reference solution for inputs: ",
                         "\ntestSample = " + JSON.stringify(testSample),
-                        "\ntrainData = " + JSON.stringify(trainData),
+                        "\ntrainSamples = " + JSON.stringify(trainData),
                         "\nK = " + K,
                         "\n\nOutput Label = " + predLabel + " (Neighbor Labels = " + JSON.stringify(neighborLabels) + ")",
                         "\nExpected Label = " + correctLabel + " (Neighbor Labels = " + JSON.stringify(correctNeighborLabels) + ")"
@@ -178,7 +173,7 @@ function testKNNPredictor(){
 
 	function runUnitTest(testSample, trainData, K, correctLabel, correctNeighborLabels){
 
-		let neighbors = getClosestKPoints(testSample, trainData, K);
+		let neighbors = findNearestPoints(testSample, trainData, K);
 		let neighborLabels = neighbors.map(point => point.label);
 		neighborLabels.sort((a,b) => (a-b));
 
@@ -212,11 +207,170 @@ function testKNNPredictor(){
 	return 1;
 }
 
-function sanityCheck(){
+function runTests(){
 	let fail1 = testDistance();
-	let fail2 = testKClosestNeighbors();
+	let fail2 = testFindNearestPoints();
 	let fail3 = testKNNPredictor();
 
-	if (!fail1 && !fail2 && !fail3) console.log("🎉🎉🎉 All 10 tests pass, woo hoo!");
+	if (!fail1 && !fail2 && !fail3) console.log("🎉🎉🎉 All 10 tests pass! You're awesome");
 }
 
+
+// autograder for the extensions.js
+
+function testCalculateAverage(){
+	let numFailedTests = 0;
+	let numTests = 0;
+	const eps = 1e-3;
+
+	function logSuccess(points, average, expectedAverage){
+		console.log("✅ calculateAverage matches reference solution for inputs: ",
+						"\npoints = " + JSON.stringify(points),
+						"\n\nOutput Average = " + JSON.stringify(average),
+						"\nExpected Average = " + JSON.stringify(expectedAverage));
+	}
+
+	function logError(points, average, expectedAverage){
+		console.log("❌ calculateAverage does not match reference solution for inputs: ",
+						"\npoints = " + JSON.stringify(points),
+						"\n\nOutput Average = " + JSON.stringify(average),
+						"\nExpected Average = " + JSON.stringify(expectedAverage)); 
+	}
+
+	function getEuclidean(point1, point2){
+		let squaredDiffs = point1.map((element, index) => Math.pow(element - point2[index], 2))
+		return Math.sqrt(squaredDiffs.reduce((diff1, diff2) => (diff1 + diff2), 0));
+	}
+
+	function runUnitTestAverage(points, expectedAverage){
+	    let average = calculateAverage(points);
+		if (average.length != expectedAverage.length){
+			logError(points, average, expectedAverage);
+			return 1;
+		}
+
+	    if (getEuclidean(average, expectedAverage) < eps){ // accommodate possible floating-point errors
+	    	logSuccess(points, average, expectedAverage);
+	    	return 0; // all good!
+	    }
+		
+		logError(points, average, expectedAverage);
+	    return 1; 
+	} 
+
+	numFailedTests += runUnitTestAverage([[1],[4]],[2.5]);
+	numTests++;
+	numFailedTests += runUnitTestAverage([[0,0,0],[2,4,6]],[1,2,3]);
+	numTests++;
+	numFailedTests += runUnitTestAverage([[1,2,3], [1,2,3],[1,2,3], [1,2,3]],[1,2,3]);
+	numTests++;
+
+	if (numFailedTests === 0){
+	console.log("✅ All " + numTests + " tests for calculateAverage passed!",
+			"\n----------------------------------");
+	return 0;
+	}
+	console.log("🫠 " + (numTests - numFailedTests) + " out of " + numTests + " tests for calculateAverage passed, you got this!", "\n---------------------------");
+	return 1;
+}
+
+function testKMeans(){
+	let numFailedTests = 0;
+	let numTests = 0;
+
+	function logSuccess(testSamples, benignCenter, malignantCenter, benignPoints, malignantPoints,
+						correctBenignPoints, correctMalignantPoints){
+		console.log("✅ KMeans matches reference solution after 1 iteration, for inputs: ",
+						"\ntestSamples = " + JSON.stringify(testSamples),
+						"\nbenignCenter = " + JSON.stringify(benignCenter),
+						"\nmalignantCenter = " + JSON.stringify(malignantCenter),
+						"\n\nOutput = " + JSON.stringify({"benign": benignPoints, "malignant": malignantPoints}),
+						"\nExpected = " + JSON.stringify({"benign": correctBenignPoints, "malignant": correctMalignantPoints}));
+	}
+
+	function logError(testSamples, benignCenter, malignantCenter, benignPoints, malignantPoints,
+		correctBenignPoints, correctMalignantPoints){
+		console.log("❌ KMeans does not match reference solution after 1 iteration, for inputs: ",
+			"\ntestSamples = " + JSON.stringify(testSamples),
+			"\nbenignCenter = " + JSON.stringify(benignCenter),
+			"\nmalignantCenter = " + JSON.stringify(malignantCenter),
+			"\n\nOutput = " + JSON.stringify({"benign": benignPoints, "malignant": malignantPoints}),
+			"\nExpected = " + JSON.stringify({"benign": correctBenignPoints, "malignant": correctMalignantPoints}));
+	}
+
+	function comparePoints(pointA, pointB){ // similar to lexicographic ordering on point coordinates 
+		for (let i = 0; i < Math.min(pointA.length, pointB.length); i++){
+			if (pointA[i] !== pointB[i]) return (pointA[i] - pointB[i]);
+		}
+		return pointA.length - pointB.length;
+	}
+	
+	function runUnitTest(testSamples, benignCenter, malignantCenter,
+						   expectedBenignPoints, expectedMalignantPoints, numIterations){
+
+        let benignPoints = [], malignantPoints = [];
+    	[benignPoints, malignantPoints] = KMeans(testSamples, numIterations);
+
+		benignPoints.sort(comparePoints);
+		malignantPoints.sort(comparePoints);
+
+		if (benignPoints.length !== expectedBenignPoints.length || malignantPoints.length !== expectedMalignantPoints.length){
+			logError(testSamples, benignCenter, malignantCenter, benignPoints, malignantPoints,
+				expectedBenignPoints, expectedMalignantPoints); return 1;
+		}
+
+		for (i = 0; i < benignPoints.length; i++){
+			if (comparePoints(benignPoints[i], expectedBenignPoints[i]) !== 0){
+				logError(testSamples, benignCenter, malignantCenter, benignPoints, malignantPoints,
+					expectedBenignPoints, expectedMalignantPoints); return 1;
+			}
+		}
+
+		for (i = 0; i < malignantPoints.length; i++){
+			if (comparePoints(malignantPoints[i], expectedMalignantPoints[i]) !== 0){
+				logError(testSamples, benignCenter, malignantCenter, benignPoints, malignantPoints,
+					expectedBenignPoints, expectedMalignantPoints); return 1;
+			}
+		}
+		
+        logSuccess(testSamples, benignCenter, malignantCenter, benignPoints, malignantPoints,
+			expectedBenignPoints, expectedMalignantPoints);
+        return 0; // success!
+    };
+
+	// 1D point tests
+	numFailedTests += runUnitTest([[0,1,0],[0,3,0]], [0,1,0], [0,3,0], [[0,1,0]], [[0,3,0]], 1); 
+	numTests++;
+	numFailedTests += runUnitTest([[0,0,0],[0,4,0],[0,3,0],[0,1,0]], [0,0,0], [0,4,0], [[0,0,0],[0,1,0]], [[0,3,0], [0,4,0]], 1); 
+	numTests++;
+
+	// 2D point test
+	numFailedTests += runUnitTest([[0,0,0,0],[0,4,4,0],[0,3,3,0],[0,1,1,0]], [0,0,0,0], [0,4,4,0], [[0,0,0,0],[0,1,1,0]], [[0,3,3,0], [0,4,4,0]], 1); 
+	numTests++;
+
+	// testing two iterations (and whether centers update correctly)
+	let checkOneIteration = runUnitTest([[0,0,0],[0,4,0],[0,4,0],[0,5,0],[0,9,0],[0,9,0]], [0,0,0], [0,9,0], [[0,0,0],[0,4,0],[0,4,0]], [[0,5,0], [0,9,0], [0,9,0]], 1); 
+	numFailedTests += checkOneIteration;
+	numTests++;
+
+	let checkTwoIterations = runUnitTest([[0,0,0],[0,4,0],[0,4,0],[0,5,0],[0,9,0],[0,9,0]], [0,0,0], [0,9,0], [[0,0,0],[0,4,0],[0,4,0],[0,5,0]], [[0,9,0], [0,9,0]], 2); 
+	numFailedTests += checkTwoIterations;
+	numTests++;
+
+	if (checkOneIteration === 0 && checkTwoIterations) console.log("🔎 Quick check: did you update benignCenter and malignantCenter?")
+
+	if (numFailedTests === 0){
+		console.log("✅ All " + numTests + " tests for KMeans passed!",
+				"\n----------------------------------");
+		return 0;
+		}
+	
+	console.log("🫠 " + (numTests - numFailedTests) + " out of " + numTests + " tests for KMeans passed, you got this!", "\n---------------------------");
+	return 1;
+}
+
+function customTests(){
+	let fail1 = testCalculateAverage();
+	let fail2 = testKMeans();
+	if (!fail1 && !fail2) console.log("🎉🎉🎉 All extension tests pass!");
+}
