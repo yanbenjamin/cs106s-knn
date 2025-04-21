@@ -29,7 +29,11 @@ const MALIGNANT_LABEL = 1;
  */
 function calculateDistance(testSample, trainSample){
 	/* TODO: delete the line below and copy & paste your earlier implementation here! */
-    return -1;
+    let distance = 0;
+    for (let i = 1; i < testSample.length - 1; i++){ // ignores first and last index
+        distance += Math.pow(testSample[i] - trainSample[i], 2);
+    }
+    return Math.sqrt(distance);
 }
 
 
@@ -55,7 +59,11 @@ function calculateAverage(points){
     for (let j = 0; j < numDimensions; j++){
         // TODO: calculate the sum of point[j] over each point of points, divide the result 
         // by numPoints to get the average (of index j), and add it to pointsAverage
-
+        let sumOverIndexJ = 0; 
+        for (let point of points){
+            sumOverIndexJ += point[j];
+        }
+        pointsAverage.push(sumOverIndexJ / numPoints);
     }
     return pointsAverage;
 }
@@ -91,6 +99,19 @@ function KMeans(testSamples, numIterations){
         // TODO: write your code here to assign each testSample of testSamples, then update the 
         // benign/malignant centers, as described in Steps (1) and (2) of the strategy above!
 
+        for (let testSample of testSamples){ // Step (1): assign points to groups 
+            let benignDistance = calculateDistance(testSample, benignCenter);
+            let malignantDistance = calculateDistance(testSample, malignantCenter);
+
+            if (benignDistance < malignantDistance){ // point is closer to benignCenter 
+                benignPoints.push(testSample);
+            } else{ // point is closer to malignantCenter
+                malignantPoints.push(testSample);
+            }
+        }
+        // Step (2): update each group's center as the average of the new points assigned to it
+        benignCenter = calculateAverage(benignPoints);
+        malignantCenter = calculateAverage(malignantPoints);
     }
     return [benignPoints, malignantPoints];
 }

@@ -34,7 +34,11 @@ const MALIGNANT_LABEL = 1;
  */
 function calculateDistance(testSample, trainSample){
 	/* TODO: delete the line below and write your own code here! */
-	return -1;
+	let distance = 0;
+    for (let i = 1; i < testSample.length - 1; i++){ // ignores first and last index
+        distance += Math.pow(testSample[i] - trainSample[i], 2);
+    }
+    return Math.sqrt(distance);
 }
 
 
@@ -71,11 +75,20 @@ function findNearestPoints(testSample, trainSamples, K){
 	
 	for (let trainSample of trainSamples){
 		// TODO: add an object to pointDistances here, as described in part (1) of the strategy
+		let distance = calculateDistance(testSample, trainSample);
+		let label = trainSample[trainSample.length - 1]; // last element (see Note above)
+		let id = trainSample[0]; // 0th element
 
+		pointDistances.push({"id": id, "distance": distance, "label": label});
 	}
 
 	// TODO: delete the line below and write your code for part (2) of the strategy!
-	return [];
+
+	//sort points from lowest to highest distance (input is a comparison function, see slides for more detail)
+	pointDistances.sort((pointA, pointB) => pointA.distance - pointB.distance);
+
+	// subarray of first K points (due to sorting, this is the closest K points)
+	return pointDistances.slice(0, K); 
 }
 
 
@@ -102,7 +115,15 @@ function predictSample(testSample, trainSamples, K){
 	let nearestPoints = findNearestPoints(testSample, trainSamples, K);
 	
 	// TODO: delete the line below & write your own code here for Steps (2) and (3)!
-	return -1;
+	let benign = 0; // counter of label 0 / BENIGN_LABEL
+	let malignant = 0; // counter of label 1 / MALIGNANT_LABEl
+	for (let point of nearestPoints){
+		if (point.label === BENIGN_LABEL) benign++;
+		else malignant++;
+	}
+	// voting occurs (picks majority label), note constants defined at very top of file
+	if (benign > malignant) return BENIGN_LABEL;
+	else return MALIGNANT_LABEL;
 }
 
 
