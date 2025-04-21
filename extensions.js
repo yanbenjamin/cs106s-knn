@@ -15,7 +15,7 @@
  *    - calculateAverage: helper function to complete
  *    - KMeans: core function to implement, actualizing the algorithm described above
  * 
- * NOTE: When you're ready to test, go into index.html, and change the line <script src="classifier.js">
+ * NOTE: When you're ready to test, go into index.html, and change the line <script src="classify.js">
  * </script> to <script src="extensions.js"></script>. Then, refresh the Chrome tab on index.html! 
  */
 
